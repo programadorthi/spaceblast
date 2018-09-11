@@ -6,7 +6,6 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/painting.dart';
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -150,15 +149,17 @@ class GameDemo extends StatefulWidget {
   GameDemoState createState() => new GameDemoState();
 }
 
-class GameDemoState extends State<GameDemo>/* with WidgetsBindingObserver */{
+class GameDemoState extends State<GameDemo> with WidgetsBindingObserver {
 
   void initState() {
     super.initState();
-//    WidgetsBinding.instance.addObserver(this);
+    print(">>>> initState GameDemoState");
+    WidgetsBinding.instance.addObserver(this);
   }
 
   void dispose() {
-//    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
+    print(">>>> dispose GameDemoState");
     super.dispose();
   }
 
@@ -168,16 +169,18 @@ class GameDemoState extends State<GameDemo>/* with WidgetsBindingObserver */{
     } else if (state == ui.AppLifecycleState.resumed) {
 //      SoundTrackPlayer.sharedInstance().resumeAll();
     }
+    print(">>>> AppLifecycleState: $state");
   }
 
   GlobalKey<NavigatorState> _navigatorKey = new GlobalKey<NavigatorState>();
 
   Future<bool> didPopRoute() async {
-    bool result = true;
+    print(">>>> didPopRoute");
+    bool result = false;
 //    Navigator.openTransaction((NavigatorTransaction transaction) {
 //      result = transaction.pop();
 //    });
-    return result;
+    return new Future<bool>.value(result);
   }
 
   Widget build(BuildContext context) {
